@@ -1,6 +1,6 @@
 ### Privacy Policy
 
-Last updated: 2024-11-22
+Last updated: 2025-05-29
 
 Thank you for using our application (the "Animal Crossing Daily"). This Privacy Policy is designed to help you understand how we collect, use, and protect your personal information.
 
