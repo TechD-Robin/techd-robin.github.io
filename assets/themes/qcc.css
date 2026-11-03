@@ -1,0 +1,16 @@
+/* QCC 色票：薄荷（#198964 東京奧運綠的粉彩版；hero 用加深版 #135F46）。只覆寫變數 */
+[data-app="qcc"] {
+  --accent: #9FE0C6;
+  --accent-hover: #B6EAD5;
+  --accent-soft: rgba(159, 224, 198, 0.16);
+  --accent-contrast: #1E1B22;
+  --hero-bg: #135F46;
+}
+@media (prefers-color-scheme: light) {
+  [data-app="qcc"] {
+    --accent: #137052;
+    --accent-hover: #198964;
+    --accent-soft: rgba(19, 112, 82, 0.12);
+    --accent-contrast: #FFFFFF;
+  }
+}

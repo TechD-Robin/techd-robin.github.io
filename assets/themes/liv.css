@@ -1,0 +1,16 @@
+/* LIV 色票：薰衣草（side menu 紫 #4D315A 當 hero 底；hover 用對應 #335533 綠的粉彩 #B7DEC0）。只覆寫變數 */
+[data-app="liv"] {
+  --accent: #C9B6E4;
+  --accent-hover: #B7DEC0;
+  --accent-soft: rgba(201, 182, 228, 0.16);
+  --accent-contrast: #1E1B22;
+  --hero-bg: #4D315A;
+}
+@media (prefers-color-scheme: light) {
+  [data-app="liv"] {
+    --accent: #6E4C9E;
+    --accent-hover: #3E6B45;
+    --accent-soft: rgba(110, 76, 158, 0.12);
+    --accent-contrast: #FFFFFF;
+  }
+}

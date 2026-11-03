@@ -1,2 +1,12 @@
 # macOS system files
 .DS_Store
+
+# Python
+__pycache__/
+*.pyc
+
+# Claude Code 本機設定與工作樹
+.claude/
+
+# 截圖暫放區（SITE 回報用，不進版控）
+_screenshot/

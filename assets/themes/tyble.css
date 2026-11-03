@@ -1,0 +1,16 @@
+/* TYBLE 色票：藍莓（#464BA2 靛藍的粉彩版；hero 用加深版 #2F3370）。只覆寫變數 */
+[data-app="tyble"] {
+  --accent: #B8BCEE;
+  --accent-hover: #CDD0F4;
+  --accent-soft: rgba(184, 188, 238, 0.16);
+  --accent-contrast: #1E1B22;
+  --hero-bg: #2F3370;
+}
+@media (prefers-color-scheme: light) {
+  [data-app="tyble"] {
+    --accent: #464BA2;
+    --accent-hover: #5A60BF;
+    --accent-soft: rgba(70, 75, 162, 0.12);
+    --accent-contrast: #FFFFFF;
+  }
+}

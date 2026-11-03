@@ -1,0 +1,420 @@
+/* TechD 官網共用樣式（SITE-10）
+   - 深色為主（D22），prefers-color-scheme: light 時換淺色一組
+   - 色票全用 CSS 變數；每 App 的覆寫在 themes/<app>.css，選擇器是 [data-app="…"]
+     （<html data-app> 讓整頁換色、首頁的卡片 <article data-app> 只換那一張）
+   - 不載 JS、不載外部字型（D8）
+*/
+
+/* ---------- 色票：預設 = TechD 開心果綠（specs/03 §1.2 v1） ---------- */
+:root {
+  color-scheme: dark light;
+  --bg: #1E1B22;
+  --surface: #2A2631;
+  --surface-2: #342F3D;
+  --text: #F2ECE4;
+  --text-muted: #A89FB0;
+  --border: rgba(242, 236, 228, 0.12);
+  --accent: #A5D8B5;
+  --accent-hover: #B9E4C6;
+  --accent-soft: rgba(165, 216, 181, 0.16);
+  --accent-contrast: #1E1B22;
+  --hero-bg: #2A2631;
+  --hero-text: #F2ECE4;
+  --hero-muted: rgba(242, 236, 228, 0.78);
+  --phone-frame: #0E0C12;
+  --frame-shadow: 0 12px 40px rgba(0, 0, 0, 0.45);
+  --radius: 16px;
+  --gutter: 16px;
+  --max: 960px;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --bg: #FAF7F2;
+    --surface: #FFFFFF;
+    --surface-2: #F1ECE6;
+    --text: #2A2631;
+    --text-muted: #6B6375;
+    --border: rgba(42, 38, 49, 0.12);
+    --accent: #2F6E48;
+    --accent-hover: #3E8A5C;
+    --accent-soft: rgba(47, 110, 72, 0.12);
+    --accent-contrast: #FFFFFF;
+    /* hero 底維持各 App 的深色主色（品牌色），字色不變 */
+    --phone-frame: #1E1B22;
+    --frame-shadow: 0 10px 32px rgba(42, 38, 49, 0.22);
+  }
+}
+
+/* ---------- 基礎 ---------- */
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", "PingFang TC", "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Noto Sans CJK TC", "Noto Sans CJK JP", "Microsoft JhengHei", "Segoe UI", Roboto, Arial, sans-serif;
+  font-size: 17px;
+  line-height: 1.65;
+  overflow-x: hidden;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+main.container { flex: 1 0 auto; }
+
+img, svg { max-width: 100%; height: auto; display: block; }
+
+a { color: var(--accent); text-decoration: none; }
+a:hover, a:focus-visible { color: var(--accent-hover); text-decoration: underline; }
+a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+
+h1, h2, h3 { line-height: 1.25; margin: 0 0 0.5em; font-weight: 700; letter-spacing: -0.01em; }
+h1 { font-size: clamp(1.9rem, 5vw, 2.6rem); }
+h2 { font-size: clamp(1.35rem, 3.5vw, 1.7rem); color: var(--accent); }
+h3 { font-size: 1.15rem; }
+p { margin: 0 0 1em; }
+p:last-child { margin-bottom: 0; }
+
+.container {
+  width: 100%;
+  max-width: var(--max);
+  margin: 0 auto;
+  padding-left: var(--gutter);
+  padding-right: var(--gutter);
+}
+
+/* ---------- 頁首 ---------- */
+.site-header {
+  border-bottom: 1px solid var(--border);
+  background: var(--bg);
+}
+.site-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  min-height: 56px;
+}
+.brand {
+  font-weight: 800;
+  font-size: 1.2rem;
+  letter-spacing: -0.02em;
+  color: var(--text);
+}
+.brand:hover { color: var(--accent); text-decoration: none; }
+
+.site-nav-end {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 4px 12px;
+}
+.lang-switch {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  gap: 4px;
+  font-size: 0.9rem;
+}
+.lang-switch a, .lang-switch span {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 999px;
+  color: var(--text-muted);
+}
+.lang-switch a:hover { color: var(--accent); text-decoration: none; background: var(--accent-soft); }
+.lang-switch span[aria-current="page"] { color: var(--accent-contrast); background: var(--accent); font-weight: 600; }
+
+/* ---------- 共用元件 ---------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  border-radius: 999px;
+  font-weight: 600;
+  background: var(--accent);
+  color: var(--accent-contrast);
+  border: 1px solid transparent;
+  white-space: nowrap;
+}
+.btn:hover, .btn:focus-visible { background: var(--accent-hover); color: var(--accent-contrast); text-decoration: none; }
+.btn-ghost {
+  background: transparent;
+  color: var(--accent);
+  border-color: var(--accent);
+}
+.btn-ghost:hover, .btn-ghost:focus-visible { background: var(--accent-soft); color: var(--accent); }
+.btn-disabled {
+  background: var(--surface-2);
+  color: var(--text-muted);
+  border-color: var(--border);
+  cursor: default;
+}
+
+.badge {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  background: var(--accent-soft);
+  color: var(--accent);
+  border: 1px solid var(--accent);
+}
+
+.app-icon {
+  width: 96px;
+  height: 96px;
+  border-radius: 22%;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.35);
+  flex: none;
+}
+
+/* ---------- 首頁 ---------- */
+.intro { padding: 40px 0 24px; }
+.intro .tagline { color: var(--text-muted); font-size: 1.1rem; margin-top: -0.25em; }
+
+.app-grid {
+  list-style: none;
+  margin: 0 0 48px;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 16px;
+}
+.app-card {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 20px;
+  border-radius: var(--radius);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-top: 4px solid var(--accent);
+  min-width: 0;
+}
+.app-card-head { display: flex; align-items: center; gap: 14px; min-width: 0; }
+.app-card .app-icon { width: 64px; height: 64px; }
+.app-card h3 { margin: 0; font-size: 1.15rem; }
+.app-card h3 a { color: var(--text); }
+.app-card h3 a:hover { color: var(--accent); }
+.app-card .tagline { color: var(--text-muted); margin: 0; }
+.app-card-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: auto; padding-top: 4px; }
+.app-card-actions .btn { padding: 7px 14px; font-size: 0.9rem; }
+
+/* ---------- App 頁 ---------- */
+.hero {
+  /* 滿版底色：把 container 的 gutter 撐出去再補回來 */
+  margin: 0 calc(-1 * var(--gutter));
+  padding: 40px var(--gutter) 36px;
+  background: var(--hero-bg);
+  color: var(--hero-text);
+}
+.hero-inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 24px;
+}
+.hero h1 { margin-bottom: 0.2em; color: var(--hero-text); }
+.hero .tagline { font-size: 1.15rem; color: var(--hero-muted); margin: 0 0 16px; }
+.hero-text { flex: 1 1 280px; min-width: 0; }
+.hero-actions { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+.hero .badge { background: rgba(255, 255, 255, 0.12); color: var(--hero-text); border-color: rgba(255, 255, 255, 0.35); }
+/* 非官方／商標聲明（showcase_<lang>.json 的 disclaimer；SITE-30.1） */
+.hero-disclaimer { margin: 18px 0 0; font-size: 0.82rem; line-height: 1.6; color: var(--hero-muted); max-width: 46ch; }
+.platforms { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 16px; padding: 0; list-style: none; }
+
+.app-body { padding: 32px 0 48px; max-width: 70ch; }
+
+/* 手機外框容器：內放 <picture>／<img> 即可（SITE-20 的截圖都走這裡） */
+.phone-frame {
+  width: min(100%, 300px);
+  aspect-ratio: 9 / 19.5;
+  padding: 10px;
+  border-radius: 44px;
+  background: var(--phone-frame);
+  box-shadow: var(--frame-shadow);
+  overflow: hidden;
+}
+.phone-frame img { width: 100%; height: 100%; object-fit: cover; border-radius: 34px; }
+.phone-rail {
+  display: flex;
+  gap: 16px;
+  overflow-x: auto;
+  padding: 8px 0 16px;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+}
+.phone-rail > * { flex: none; scroll-snap-align: start; }
+.phone-rail:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; border-radius: 8px; }
+.phone-frame picture { display: block; width: 100%; height: 100%; }
+
+/* Mac 視窗外框（SITE-20）：圓角＋頂部標題列（三個圓點）＋陰影，變數與 .phone-frame 同一套。
+   .mac-frame--native：截圖本身已帶 macOS 原生標題列時用，不再畫標題列，只留圓角／框線／陰影。 */
+.mac-frame {
+  --mac-bar: 28px;
+  position: relative;
+  width: 100%;
+  padding-top: var(--mac-bar);
+  border-radius: 12px;
+  background: var(--phone-frame);
+  border: 1px solid var(--border);
+  box-shadow: var(--frame-shadow);
+  overflow: hidden;
+}
+.mac-frame::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: var(--mac-bar);
+  background: var(--surface-2);
+  border-bottom: 1px solid var(--border);
+}
+.mac-frame::after {
+  content: "";
+  position: absolute;
+  top: calc(var(--mac-bar) / 2 - 6px);
+  left: 12px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #FF5F57;
+  box-shadow: 20px 0 0 #FEBC2E, 40px 0 0 #28C840;
+}
+.mac-frame picture, .mac-frame img { display: block; width: 100%; height: auto; }
+.mac-frame--native { padding-top: 0; }
+.mac-frame--native::before, .mac-frame--native::after { content: none; }
+
+/* ---------- 行銷頁（content/<app>/showcase.json；SITE-20） ---------- */
+.hero--showcase { padding-bottom: 40px; }
+.hero--showcase .hero-inner {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: 20px 24px;
+}
+.hero-visual { grid-column: 1 / -1; position: relative; display: flex; justify-content: center; padding-top: 8px; }
+.hero-visual .hero-mac { display: none; }
+.hero-visual .hero-phone { width: min(64vw, 240px); }
+@media (min-width: 860px) {
+  .hero--showcase .hero-inner { grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); gap: 16px 32px; }
+  .hero--showcase .app-icon { grid-column: 1; grid-row: 1; align-self: end; }
+  .hero--showcase .hero-text { grid-column: 1; grid-row: 2; align-self: start; }
+  .hero--showcase .hero-visual { grid-column: 2; grid-row: 1 / span 2; padding-top: 0; }
+  .hero-visual.has-mac { display: block; min-height: 420px; }
+  .hero-visual.has-mac .hero-mac { display: block; position: absolute; top: 24px; right: 0; width: 92%; }
+  .hero-visual.has-mac .hero-phone { position: absolute; left: 0; bottom: 0; width: 168px; z-index: 1; }
+}
+
+.release-latest {
+  margin: 24px 0 0;
+  padding: 20px;
+  border-radius: var(--radius);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--accent);
+}
+.release-latest h2 { font-size: 1.1rem; }
+.release-version { color: var(--text); font-weight: 600; margin-left: 0.4em; }
+.release-more { margin-top: 12px; font-weight: 600; }
+.releases { padding: 8px 0 48px; max-width: 70ch; }
+.release { padding: 20px 0; border-top: 1px solid var(--border); }
+
+.showcase-features, .showcase-gallery, .showcase-privacy, .showcase-specs {
+  padding: 40px 0;
+  border-top: 1px solid var(--border);
+}
+.showcase-specs { padding-bottom: 56px; }
+.feature {
+  display: grid;
+  gap: 24px;
+  align-items: center;
+  padding: 28px 0;
+}
+.feature-text h3 { font-size: clamp(1.25rem, 3vw, 1.5rem); margin-bottom: 0.6em; }
+.feature-shots { display: flex; justify-content: center; align-items: flex-start; gap: 16px; min-width: 0; }
+.feature-shots .phone-frame, .phone-rail .phone-frame { padding: 7px; border-radius: 32px; }
+.feature-shots .phone-frame img, .phone-rail .phone-frame img { border-radius: 25px; }
+.feature-shots--1 .phone-frame { width: min(64%, 240px); }
+.feature-shots--2 .phone-frame { width: min(47%, 210px); }
+.feature-shots--2 .phone-frame:nth-child(2) { margin-top: 40px; }
+.feature-shots.is-mac .mac-frame { width: 100%; }
+@media (min-width: 760px) {
+  .feature { grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr); gap: 48px; }
+  .feature:nth-of-type(even) .feature-text { order: 2; }
+  /* 純文字賣點（showcase.json 的 shots 為空；圖已在 hero）：單欄，不留空的截圖欄 */
+  .feature.feature--text { grid-template-columns: minmax(0, 70ch); }
+}
+
+.gallery-hint { color: var(--text-muted); font-size: 0.92rem; }
+.gallery-label {
+  margin: 24px 0 4px;
+  font-size: 0.95rem;
+  letter-spacing: 0.04em;
+  color: var(--text-muted);
+}
+/* 輪播裡的外框：陰影收小、下方留白，否則陰影被捲動容器切成一條灰帶 */
+.showcase-gallery .phone-rail { --frame-shadow: 0 6px 16px rgba(0, 0, 0, 0.28); padding: 8px 2px 28px; }
+.phone-rail .phone-frame { width: 200px; }
+.mac-rail { gap: 20px; }
+.mac-rail .mac-frame { width: min(82vw, 560px); }
+
+.showcase-privacy {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 20px;
+  align-items: start;
+}
+.privacy-icon { color: var(--accent); width: 56px; height: 56px; margin-top: 4px; }
+.check-list { list-style: none; margin: 12px 0 0; padding: 0; display: grid; gap: 6px; }
+.check-list li { position: relative; padding-left: 1.6em; }
+.check-list li::before { content: "✓"; position: absolute; left: 0; color: var(--accent); font-weight: 700; }
+
+.spec-list { margin: 0; display: grid; gap: 0; border-top: 1px solid var(--border); }
+.spec-list > div { display: grid; grid-template-columns: minmax(7em, 0.35fr) minmax(0, 1fr); gap: 16px; padding: 12px 0; border-bottom: 1px solid var(--border); }
+.spec-list dt { color: var(--text-muted); font-weight: 600; }
+.spec-list dd { margin: 0; }
+
+/* ---------- 關於 TechD ---------- */
+.about { max-width: 70ch; padding-bottom: 48px; }
+.feature-note { font-size: 0.85rem; color: var(--text-muted); }
+.about .source-note { margin-top: 32px; font-size: 0.85rem; color: var(--text-muted); }
+
+/* ---------- 頁尾 ---------- */
+.site-footer {
+  border-top: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text-muted);
+  font-size: 0.92rem;
+  padding: 28px 0 36px;
+}
+.site-footer h2 { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); margin-bottom: 0.4em; }
+.site-footer ul { list-style: none; margin: 0 0 16px; padding: 0; display: flex; flex-wrap: wrap; gap: 4px 20px; }
+.site-footer .copyright { margin-top: 16px; }
+
+@media (max-width: 480px) {
+  body { font-size: 16px; }
+  .intro { padding-top: 28px; }
+  .hero { padding-top: 28px; padding-bottom: 28px; }
+  .app-icon { width: 80px; height: 80px; }
+  .site-nav { padding-top: 6px; padding-bottom: 6px; }
+  .lang-switch a, .lang-switch span { padding: 4px 8px; }
+  .showcase-privacy { grid-template-columns: minmax(0, 1fr); }
+  .hero--showcase .hero-inner { grid-template-columns: minmax(0, 1fr); gap: 16px; }
+  .hero--showcase .app-icon { width: 72px; height: 72px; }
+  .phone-rail .phone-frame { width: 168px; }
+  .spec-list > div { grid-template-columns: minmax(0, 1fr); gap: 2px; }
+}
+
+@media (min-width: 992px) {
+  /* 寬螢幕時 hero 不再貼齊視窗邊，收個圓角 */
+  .hero { border-radius: 0 0 var(--radius) var(--radius); }
+}
